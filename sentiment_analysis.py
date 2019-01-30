@@ -52,75 +52,76 @@ def analys_tweets(positives, negatives, filtered_tweets_work_book, positive_twee
         created_at = filtered_tweets_row[1].value
         text = filtered_tweets_row[2].value
         clean_text = filtered_tweets_row[3].value
-        for tweet_word in clean_text.split():
-            tweet_word = tweet_word.strip()
-            for positive_word in positives:
-                positive_word = positive_word.strip()
-                if positive_word in tweet_word:
-                    pos_count += 1
-            for negative_word in negatives:
-                negative_word = negative_word.strip()
-                if negative_word in tweet_word:
-                    neg_count += 1
-        if pos_count > neg_count:
-            label = positive_label
-        elif neg_count > pos_count:
-            label = negative_label
-        elif (pos_count == 0) and (neg_count == 0):  # neutral tweet
-            label = neutral_label
-        elif (pos_count == neg_count) and (pos_count > 0):  # mixed tweet, pos = negatives
-            label = mixed_label
-        # set counters to zero for the next tweet
-        pos_count = 0
-        neg_count = 0
-        if label == positive_label:
-            if row_positive_write == 0:
-                positive_tweets_work_sheet.write(row_positive_write, 0, 'id')
-                positive_tweets_work_sheet.write(row_positive_write, 1, 'created_at')
-                positive_tweets_work_sheet.write(row_positive_write, 2, 'text')
-                positive_tweets_work_sheet.write(row_positive_write, 3, 'clean_text')
+        if isinstance(clean_text, str):
+            for tweet_word in clean_text.split():
+                tweet_word = tweet_word.strip()
+                for positive_word in positives:
+                    positive_word = positive_word.strip()
+                    if positive_word in tweet_word:
+                        pos_count += 1
+                for negative_word in negatives:
+                    negative_word = negative_word.strip()
+                    if negative_word in tweet_word:
+                        neg_count += 1
+            if pos_count > neg_count:
+                label = positive_label
+            elif neg_count > pos_count:
+                label = negative_label
+            elif (pos_count == 0) and (neg_count == 0):  # neutral tweet
+                label = neutral_label
+            elif (pos_count == neg_count) and (pos_count > 0):  # mixed tweet, pos = negatives
+                label = mixed_label
+            # set counters to zero for the next tweet
+            pos_count = 0
+            neg_count = 0
+            if label == positive_label:
+                if row_positive_write == 0:
+                    positive_tweets_work_sheet.write(row_positive_write, 0, 'id')
+                    positive_tweets_work_sheet.write(row_positive_write, 1, 'created_at')
+                    positive_tweets_work_sheet.write(row_positive_write, 2, 'text')
+                    positive_tweets_work_sheet.write(row_positive_write, 3, 'clean_text')
+                    row_positive_write += 1
+                positive_tweets_work_sheet.write(row_positive_write, col_write, id_value)
+                positive_tweets_work_sheet.write(row_positive_write, col_write + 1, created_at)
+                positive_tweets_work_sheet.write(row_positive_write, col_write + 2, text)
+                positive_tweets_work_sheet.write(row_positive_write, col_write + 3, clean_text)
                 row_positive_write += 1
-            positive_tweets_work_sheet.write(row_positive_write, col_write, id_value)
-            positive_tweets_work_sheet.write(row_positive_write, col_write + 1, created_at)
-            positive_tweets_work_sheet.write(row_positive_write, col_write + 2, text)
-            positive_tweets_work_sheet.write(row_positive_write, col_write + 3, clean_text)
-            row_positive_write += 1
-        elif label == negative_label:
-            if row_negative_write == 0:
-                negative_tweets_work_sheet.write(row_negative_write, 0, 'id')
-                negative_tweets_work_sheet.write(row_negative_write, 1, 'created_at')
-                negative_tweets_work_sheet.write(row_negative_write, 2, 'text')
-                negative_tweets_work_sheet.write(row_negative_write, 3, 'clean_text')
+            elif label == negative_label:
+                if row_negative_write == 0:
+                    negative_tweets_work_sheet.write(row_negative_write, 0, 'id')
+                    negative_tweets_work_sheet.write(row_negative_write, 1, 'created_at')
+                    negative_tweets_work_sheet.write(row_negative_write, 2, 'text')
+                    negative_tweets_work_sheet.write(row_negative_write, 3, 'clean_text')
+                    row_negative_write += 1
+                negative_tweets_work_sheet.write(row_negative_write, col_write, id_value)
+                negative_tweets_work_sheet.write(row_negative_write, col_write + 1, created_at)
+                negative_tweets_work_sheet.write(row_negative_write, col_write + 2, text)
+                negative_tweets_work_sheet.write(row_negative_write, col_write + 3, clean_text)
                 row_negative_write += 1
-            negative_tweets_work_sheet.write(row_negative_write, col_write, id_value)
-            negative_tweets_work_sheet.write(row_negative_write, col_write + 1, created_at)
-            negative_tweets_work_sheet.write(row_negative_write, col_write + 2, text)
-            negative_tweets_work_sheet.write(row_negative_write, col_write + 3, clean_text)
-            row_negative_write += 1
-        elif label == mixed_label:
-            if row_mixed_write == 0:
-                mixed_tweets_work_sheet.write(row_mixed_write, 0, 'id')
-                mixed_tweets_work_sheet.write(row_mixed_write, 1, 'created_at')
-                mixed_tweets_work_sheet.write(row_mixed_write, 2, 'text')
-                mixed_tweets_work_sheet.write(row_mixed_write, 3, 'clean_text')
+            elif label == mixed_label:
+                if row_mixed_write == 0:
+                    mixed_tweets_work_sheet.write(row_mixed_write, 0, 'id')
+                    mixed_tweets_work_sheet.write(row_mixed_write, 1, 'created_at')
+                    mixed_tweets_work_sheet.write(row_mixed_write, 2, 'text')
+                    mixed_tweets_work_sheet.write(row_mixed_write, 3, 'clean_text')
+                    row_mixed_write += 1
+                mixed_tweets_work_sheet.write(row_mixed_write, col_write, id_value)
+                mixed_tweets_work_sheet.write(row_mixed_write, col_write + 1, created_at)
+                mixed_tweets_work_sheet.write(row_mixed_write, col_write + 2, text)
+                mixed_tweets_work_sheet.write(row_mixed_write, col_write + 3, clean_text)
                 row_mixed_write += 1
-            mixed_tweets_work_sheet.write(row_mixed_write, col_write, id_value)
-            mixed_tweets_work_sheet.write(row_mixed_write, col_write + 1, created_at)
-            mixed_tweets_work_sheet.write(row_mixed_write, col_write + 2, text)
-            mixed_tweets_work_sheet.write(row_mixed_write, col_write + 3, clean_text)
-            row_mixed_write += 1
-        elif label == neutral_label:
-            if row_neutral_write == 0:
-                neutral_tweets_work_sheet.write(row_neutral_write, 0, 'id')
-                neutral_tweets_work_sheet.write(row_neutral_write, 1, 'created_at')
-                neutral_tweets_work_sheet.write(row_neutral_write, 2, 'text')
-                neutral_tweets_work_sheet.write(row_neutral_write, 3, 'clean_text')
+            elif label == neutral_label:
+                if row_neutral_write == 0:
+                    neutral_tweets_work_sheet.write(row_neutral_write, 0, 'id')
+                    neutral_tweets_work_sheet.write(row_neutral_write, 1, 'created_at')
+                    neutral_tweets_work_sheet.write(row_neutral_write, 2, 'text')
+                    neutral_tweets_work_sheet.write(row_neutral_write, 3, 'clean_text')
+                    row_neutral_write += 1
+                neutral_tweets_work_sheet.write(row_neutral_write, col_write, id_value)
+                neutral_tweets_work_sheet.write(row_neutral_write, col_write + 1, created_at)
+                neutral_tweets_work_sheet.write(row_neutral_write, col_write + 2, text)
+                neutral_tweets_work_sheet.write(row_neutral_write, col_write + 3, clean_text)
                 row_neutral_write += 1
-            neutral_tweets_work_sheet.write(row_neutral_write, col_write, id_value)
-            neutral_tweets_work_sheet.write(row_neutral_write, col_write + 1, created_at)
-            neutral_tweets_work_sheet.write(row_neutral_write, col_write + 2, text)
-            neutral_tweets_work_sheet.write(row_neutral_write, col_write + 3, clean_text)
-            row_neutral_write += 1
     positive_tweets_work_book.close()
     negative_tweets_work_book.close()
     mixed_tweets_work_book.close()
