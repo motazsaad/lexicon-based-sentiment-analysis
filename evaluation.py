@@ -1,30 +1,6 @@
 import numpy as np
-import numpy as np
 
-def evaluation(predictions, y_list):
-    label_names = ['neg', 'pos', 'neut', 'mix']
-    pred_labels = np.asarray([label_names.index(p) for p in predictions])
-    true_labels = np.asarray([label_names.index(y) for y in y_list])
-    # print('pred_labels.shape:', pred_labels.shape)
-    # print('true_labels.shape:', true_labels.shape)
-    # print('len(predictions):', len(predictions))
-    # print('len(y_list):', len(y_list))
-    # True Positive (TP): we predict a label of 1 (positive), and the true label is 1.
-    TP = np.sum(np.logical_and(pred_labels == 1, true_labels == 1))
-    # True Negative (TN): we predict a label of 0 (negative), and the true label is 0.
-    TN = np.sum(np.logical_and(pred_labels == 0, true_labels == 0))
-    # False Positive (FP): we predict a label of 1 (positive), but the true label is 0.
-    FP = np.sum(np.logical_and(pred_labels == 1, true_labels == 0))
-    # False Negative (FN): we predict a label of 0 (negative), but the true label is 1.
-    FN = np.sum(np.logical_and(pred_labels == 0, true_labels == 1))
-    print('TP: %i, FP: %i, TN: %i, FN: %i' % (TP, FP, TN, FN))
-    precision = TP / (TP + FP)
-    recall = TP / (TP + FN)
-    accuracy = (TP + TN) / (TP + TN + FP + FN)
-    print('TP + TN + FP + FN = ', TP + TN + FP + FN)
-    f_score = (2 * precision * recall) / (precision + recall)
-    return accuracy, precision, recall, f_score
-
+from pycm import ConfusionMatrix
 
 data = []
 data_labels = []
@@ -82,8 +58,10 @@ for tweet in data:
 
 for l, p in zip(data_labels, predictions):
     print(l, p)
-accuracy, precision, recall, f_score = evaluation(predictions, data_labels)
-print('accuracy: {}'.format(precision))
-print('precision: {}'.format(precision))
-print('recall: {}'.format(recall))
-print('f-score: {}'.format(f_score))
+
+label_names = ['neg', 'pos', 'neut', 'mix']
+pred_labels = np.asarray([label_names.index(p) for p in predictions])
+true_labels = np.asarray([label_names.index(y) for y in data_labels])
+cm = ConfusionMatrix(actual_vector=true_labels, predict_vector=pred_labels)  # Create CM From Data
+print(cm.classes)
+print(cm)
