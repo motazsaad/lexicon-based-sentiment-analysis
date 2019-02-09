@@ -1,5 +1,5 @@
 import numpy as np
-
+import numpy as np
 
 def evaluation(predictions, y_list):
     label_names = ['neg', 'pos', 'neut', 'mix']
@@ -29,8 +29,8 @@ def evaluation(predictions, y_list):
 data = []
 data_labels = []
 
-positive_file = 'manual_annotation/manual_annotation_healthcare/healthcare_negative.txt'
-negative_file = 'manual_annotation/manual_annotation_healthcare/healthcare_positive.txt'
+negative_file = 'manual_annotation/manual_annotation_here_saudi/here_ksa_negative.txt'
+positive_file = 'manual_annotation/manual_annotation_here_saudi/here_ksa_positive.txt'
 
 print('read data ...')
 # read positive data
@@ -82,7 +82,6 @@ for tweet in data:
 
 for l, p in zip(data_labels, predictions):
     print(l, p)
-
 accuracy, precision, recall, f_score = evaluation(predictions, data_labels)
 print('accuracy: {}'.format(precision))
 print('precision: {}'.format(precision))
