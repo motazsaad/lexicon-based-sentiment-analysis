@@ -34,8 +34,11 @@ print('# of negative', data_labels.count('neg'))
 positive_lexicon_file = 'positive_lexicon.txt'
 negative_lexicon_file = 'negative_lexicon.txt'
 
-positive_lexicon = open(positive_file, encoding='utf-8').read().splitlines()
+positive_lexicon = open(positive_lexicon_file, encoding='utf-8').read().splitlines()
 negative_lexicon = open(negative_lexicon_file, encoding='utf-8').read().splitlines()
+
+print(positive_lexicon)
+print(negative_lexicon)
 
 
 def classify_tweet(text):
