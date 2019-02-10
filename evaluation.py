@@ -1,16 +1,12 @@
 import numpy as np
-from pycm import ConfusionMatrix
 
+from pycm import ConfusionMatrix
 
 data = []
 data_labels = []
 
-# positive_file = 'manual_annotation/manual_annotation_healthcare/healthcare_negative.txt'
-# negative_file = 'manual_annotation/manual_annotation_healthcare/healthcare_positive.txt'
-
-negative_file = 'manual_annotation/manual_annotation_here_saudi/here_ksa_negative.txt'
-positive_file = 'manual_annotation/manual_annotation_here_saudi/here_ksa_positive.txt'
-
+negative_file = 'manual_annotation/manual_annotation_talak_c/talak_c_negative.txt'
+positive_file = 'manual_annotation/manual_annotation_talak_c/talak_c_positive.txt'
 
 print('read data ...')
 # read positive data
@@ -77,4 +73,5 @@ print('ACC(Accuracy)', cm.class_stat.get('ACC'))
 print('F1 score', cm.class_stat.get('F1'))
 print('Accuracy AVG', sum(cm.class_stat.get('ACC').values()) / len(cm.class_stat.get('ACC')))
 print('F1 AVG', sum(cm.class_stat.get('F1').values()) / len(cm.class_stat.get('F1')))
+print('Recall', cm.class_stat.get('TPR')[1])
 print('----------------------------------------------')
