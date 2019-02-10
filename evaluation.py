@@ -5,8 +5,8 @@ from pycm import ConfusionMatrix
 data = []
 data_labels = []
 
-negative_file = 'manual_annotation/manual_annotation_here_saudi/here_ksa_negative.txt'
-positive_file = 'manual_annotation/manual_annotation_here_saudi/here_ksa_positive.txt'
+negative_file = 'manual_annotation/manual_annotation_talak_c/talak_c_negative.txt'
+positive_file = 'manual_annotation/manual_annotation_talak_c/talak_c_positive.txt'
 
 print('read data ...')
 # read positive data
@@ -30,8 +30,11 @@ print('# of negative', data_labels.count('neg'))
 positive_lexicon_file = 'positive_lexicon.txt'
 negative_lexicon_file = 'negative_lexicon.txt'
 
-positive_lexicon = open(positive_file, encoding='utf-8').read().splitlines()
+positive_lexicon = open(positive_lexicon_file, encoding='utf-8').read().splitlines()
 negative_lexicon = open(negative_lexicon_file, encoding='utf-8').read().splitlines()
+
+print(positive_lexicon)
+print(negative_lexicon)
 
 
 def classify_tweet(text):
@@ -65,3 +68,10 @@ true_labels = np.asarray([label_names.index(y) for y in data_labels])
 cm = ConfusionMatrix(actual_vector=true_labels, predict_vector=pred_labels)  # Create CM From Data
 print(cm.classes)
 print(cm)
+print('----------- summary results -----------------')
+print('ACC(Accuracy)', cm.class_stat.get('ACC'))
+print('F1 score', cm.class_stat.get('F1'))
+print('Accuracy AVG', sum(cm.class_stat.get('ACC').values()) / len(cm.class_stat.get('ACC')))
+print('F1 AVG', sum(cm.class_stat.get('F1').values()) / len(cm.class_stat.get('F1')))
+print('Recall', cm.class_stat.get('TPR')[1])
+print('----------------------------------------------')
